@@ -28,4 +28,12 @@ public class ClientController {
     public ResponseEntity get(@PathVariable String email){
         return new ResponseEntity(service.getClient(email), HttpStatusCode.valueOf(200));
     }
+
+    @GetMapping("profile/{id}")
+    public ResponseEntity profile(@PathVariable String id){
+
+        // on controlle que le client existe
+
+        return new ResponseEntity(service.getDto(id), HttpStatusCode.valueOf(200));
+    }
 }

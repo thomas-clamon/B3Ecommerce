@@ -22,4 +22,8 @@ public interface CommandeRepository extends JpaRepository<CommandeEntity, Intege
     @Query (value = "select AVG(prix_vente) as 'avg', YEAR(date_commande) as 'year' from Commandes GROUP BY YEAR(date_commande)",
             nativeQuery = true)
     List<OPAVGYearDto> getAVG();
+
+    @Query(value = "select SUM(prix_vente) from Commandes Group By email_client\n" +
+            "Having email_client = ?1", nativeQuery = true)
+    Float getCAByUser(String email);
 }

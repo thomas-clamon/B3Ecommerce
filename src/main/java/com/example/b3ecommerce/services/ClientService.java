@@ -2,8 +2,10 @@ package com.example.b3ecommerce.services;
 
 import com.example.b3ecommerce.dto.imput.IPClientDto;
 import com.example.b3ecommerce.dto.outpout.OPClientDto;
+import com.example.b3ecommerce.dto.outpout.OPClientProfileDto;
 import com.example.b3ecommerce.entities.ClientEntity;
 import com.example.b3ecommerce.repositories.ClientRepository;
+import com.example.b3ecommerce.repositories.CommandeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,10 @@ public class ClientService implements IClientService{
 
     @Autowired
     public ClientRepository repository;
+
+
+    @Autowired
+    CommandeRepository commandeRepository;
 
     @Override
     public Boolean ajouterClient(IPClientDto dto) {
@@ -58,4 +64,40 @@ public class ClientService implements IClientService{
         resultat.setAge(age);
         return resultat;
     }
+
+    @Override
+    public Integer Age(String email) {
+        // on recupere le client
+        LocalDate birth = repository.findById(email).get().getDate_naissance();
+        return Period.between(birth, LocalDate.now()).getYears();
+    }
+
+    @Override
+    public Integer nbCommande(String email) {
+        return  repository.findById(email).get().getCommandeEntity().size();
+    }
+
+    @Override
+    public OPClientProfileDto getDto(String email) {
+        // on cree un dto vierge
+        OPClientProfileDto dto = new OPClientProfileDto();
+
+        // on recupere l'age du client
+        dto.setAge(Age(email));
+
+        // on recupere le nom plus le prenom
+        ClientEntity entity = repository.findById(email).get();
+        dto.setDisplay_name(entity.getNom() + " " + entity.getPrenom());
+
+        // on recupere le nombre de commande
+        dto.setNbOrders(nbCommande(email));
+
+        // la date de la derniere commande
+        dto.setLastOrderDate(repository.getLastOrder(email));
+
+        dto.setCa(commandeRepository.getCAByUser(email));
+        return dto;
+    }
+
+
 }
