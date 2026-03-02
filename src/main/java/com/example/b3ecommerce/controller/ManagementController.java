@@ -25,4 +25,10 @@ public class ManagementController {
     public ResponseEntity getAvgByYear(@RequestParam Integer year){
         return  new ResponseEntity(service.getSellingByYear(year), HttpStatusCode.valueOf(200));
     }
+
+    @GetMapping ("AVG")
+    public ResponseEntity getAvg(){
+        return  new ResponseEntity(service.getAvg(), HttpStatusCode.valueOf(200));
+    }
+
 }

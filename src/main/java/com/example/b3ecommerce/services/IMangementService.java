@@ -1,5 +1,6 @@
 package com.example.b3ecommerce.services;
 
+import com.example.b3ecommerce.dto.outpout.OPAVGYearDto;
 import com.example.b3ecommerce.dto.outpout.OPMargeDto;
 import com.example.b3ecommerce.entities.CommandeEntity;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -15,4 +16,6 @@ public interface IMangementService {
     Double marge ();
 
     Float getSellingByYear(Integer year);
+
+    List<OPAVGYearDto> getAvg();
 }

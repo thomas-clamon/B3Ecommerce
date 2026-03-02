@@ -1,5 +1,6 @@
 package com.example.b3ecommerce.services;
 
+import com.example.b3ecommerce.dto.outpout.OPAVGYearDto;
 import com.example.b3ecommerce.dto.outpout.OPMargeDto;
 import com.example.b3ecommerce.entities.CommandeEntity;
 import com.example.b3ecommerce.repositories.CommandeRepository;
@@ -50,5 +51,10 @@ public class MangementService implements IMangementService{
     @Override
     public Float getSellingByYear(Integer year) {
         return commandeRepository.AVGSellingByYear(year);
+    }
+
+    @Override
+    public List<OPAVGYearDto> getAvg() {
+        return commandeRepository.getAVG();
     }
 }
