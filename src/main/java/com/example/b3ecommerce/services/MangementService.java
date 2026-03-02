@@ -46,4 +46,9 @@ public class MangementService implements IMangementService{
     public Double marge() {
         return marge(commandeRepository.findAll());
     }
+
+    @Override
+    public Float getSellingByYear(Integer year) {
+        return commandeRepository.AVGSellingByYear(year);
+    }
 }
